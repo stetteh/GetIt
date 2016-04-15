@@ -124,4 +124,14 @@ namespace GetIt.Controllers
             base.Dispose(disposing);
         }
     }
+
+    public enum Author
+    {
+        Seth,
+        John,
+        Daniel,
+        Kevin,
+        Lucky,
+        Tee
+    }
 }

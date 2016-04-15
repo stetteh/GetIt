@@ -1,3 +1,5 @@
+using FizzWare.NBuilder;
+using GetIt.Controllers;
 using GetIt.Models;
 
 namespace GetIt.Migrations
@@ -29,7 +31,19 @@ namespace GetIt.Migrations
             //    );
             //
 
-
+            if (!context.Posts.Any())
+            {
+                var posts = Builder<Post>.CreateListOfSize(30)
+                    .All()
+                    .With(x => x.Author = Faker.EnumFaker.SelectFrom<Author>().ToString())
+                    .With(x => x.Title = Faker.TextFaker.Sentence())
+                    .With(x => x.Body = Faker.TextFaker.Sentences(6))
+                    .With(x => x.PostDate = Faker.DateTimeFaker.DateTime())
+                    .With(x => x.Upvote = Faker.NumberFaker.Number(100))
+                    .With(x => x.Downvote = Faker.NumberFaker.Number(100))
+                    .Build();
+                context.Posts.AddRange(posts);
+            }
         }
     }
 }
