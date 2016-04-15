@@ -40,7 +40,7 @@ namespace GetIt.Migrations
                     .With(x => x.Body = Faker.TextFaker.Sentences(6))
                     .With(x => x.PostDate = Faker.DateTimeFaker.DateTime())
                     .With(x => x.Upvote = Faker.NumberFaker.Number(100))
-                    .With(x => x.Downvote = Faker.NumberFaker.Number(100))
+                    .With(x => x.Downvote = Faker.NumberFaker.Number(20))
                     .Build();
                 context.Posts.AddRange(posts);
             }
