@@ -123,6 +123,22 @@ namespace GetIt.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpPost] //up and down vote actions
+        public ActionResult Votes(int id, bool up)
+        {
+            var post = db.Posts.Find(id);
+            if (up)
+            {
+                post.Upvote++;
+            }
+            else
+            {
+                post.Downvote++;
+            }
+            db.SaveChanges();
+            return Content((post.Upvote - post.Downvote).ToString());
+        }
     }
 
     public enum Author
