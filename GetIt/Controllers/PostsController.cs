@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using GetIt.Models;
 
@@ -156,6 +153,18 @@ namespace GetIt.Controllers
             post.Comments.Add(new Comment() { Author = author, Body = body, CommentDate = date });
             db.SaveChanges();
             return Content("comment created");
+        }
+
+        public ActionResult DisplayComment()
+        {
+            var model = db.Comments.Select(c => new CommentVM()
+            {
+                AuthorName = c.Author,
+                Body = c.Body,
+                SubmitDate = c.CommentDate,
+                Votes = c.Upvote - c.Downvote
+            });
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
     }
 

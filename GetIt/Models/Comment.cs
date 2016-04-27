@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Humanizer;
 
 namespace GetIt.Models
 {
@@ -14,5 +15,6 @@ namespace GetIt.Models
         public Post Post { get; set; }
         public int Upvote { get; set; }
         public int Downvote { get; set; }
+        public string PrettyDate => CommentDate.Humanize();
     }
 }

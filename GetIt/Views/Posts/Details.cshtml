@@ -1,5 +1,6 @@
 ﻿@model GetIt.Models.Post
 
+
 @{
     ViewBag.Title = "Details";
 }
@@ -67,16 +68,13 @@
     <div class="row">
         <br />
         <br />
-        <div class="col-sm-1">
-            @(item.Upvote - item.Downvote) <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-        </div>
+
         <div class="col-md-8">
-            <p>submitted @Html.DisplayFor(modelItem => item.CommentDate), by @Html.DisplayFor(modelItem => item.Author)</p>
+            <P>@Html.DisplayFor(modelItem => item.Body)</P>
+           <p>submitted @item.PrettyDate, by @item.Author</p>
         </div>
     </div>
 }
-
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
