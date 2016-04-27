@@ -139,6 +139,15 @@ namespace GetIt.Controllers
             db.SaveChanges();
             return Content((post.Upvote - post.Downvote).ToString());
         }
+
+        public ActionResult CreateComment(int id, string author, string body, DateTime date)
+        {
+            var post = db.Posts.Find(id);
+
+            post.Comments.Add(new Comment() {Author = author, Body = body, CommentDate = date});
+            db.SaveChanges();
+            return Content("comment created");
+        }
     }
 
     public enum Author
