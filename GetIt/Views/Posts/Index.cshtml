@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GetIt.Models.Post>
+﻿@model IEnumerable<GetIt.Models.PostIndexVM>
 
 @{
     ViewBag.Title = "Index";
@@ -16,16 +16,53 @@
         <br />
         <br />
         <div class="col-sm-1">
-            @(item.Upvote - item.Downvote) <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+            <div data-postid="@item.PostId">
+                <span class="votes">@item.Votes</span>
+                <div class="up">
+                    <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                </div>
+                <div class="down">
+                    <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-1">
-            <img class="img-circle" src="https://unsplash.it/80/80?image=1062">
+        <div class="col-sm-2">
+            <img class="img-circle img-responsive" src="https://unsplash.it/80/80?image=1062">
         </div>
-        <div class="col-md-8">
-            @Html.ActionLink($"{item.Title}", $"Details/{item.Id}")
-            <p>submitted @Html.DisplayFor(modelItem => item.PostDate), by @Html.DisplayFor(modelItem => item.Author)</p>
-            @Html.ActionLink($"{item.Comments.Count} comments", $"Details/{item.Id}")
+        <div class="col-sm-8">
+            @Html.ActionLink(item.Title, "Details", new { id = item.PostId })
+            <p>submitted @item.PrettyDate, by @item.AuthorName</p>
+            @Html.ActionLink(item.CommentCount + " comments", "Details", new { id = item.PostId })
+
         </div>
     </div>
+}
+
+@section scripts{
+
+    <script>
+        $(function () {
+
+
+            $(".up, .down").click(function () {
+                var div = $(this);
+
+                var isUp = div.hasClass('up');
+
+                var postid = div.parent().data("postid");
+
+                $.ajax({
+                    method: "POST",
+                    url: "/posts/votes",
+                    data: { id: postid, up: isUp }
+                }).done(function (res) {
+                    div.siblings('.votes').html(res);
+                });
+
+            });
+
+        });
+
+    </script>
+
 }

@@ -17,7 +17,16 @@ namespace GetIt.Controllers
         // GET: Posts
         public ActionResult Index()
         {
-            return View(db.Posts.ToList());
+            var model = db.Posts.Select(x => new PostIndexVM()
+            {
+                AuthorName = x.Author,
+                CommentCount = x.Comments.Count,
+                Title = x.Title,
+                PostId = x.Id,
+                SubmitDate = x.PostDate,
+                Votes = x.Upvote - x.Downvote
+            });
+            return View(model);
         }
 
         // GET: Posts/Details/5
@@ -137,14 +146,14 @@ namespace GetIt.Controllers
                 post.Downvote++;
             }
             db.SaveChanges();
-            return Content((post.Upvote - post.Downvote).ToString());
+            return Json((post.Upvote - post.Downvote).ToString());
         }
 
         public ActionResult CreateComment(int id, string author, string body, DateTime date)
         {
             var post = db.Posts.Find(id);
 
-            post.Comments.Add(new Comment() {Author = author, Body = body, CommentDate = date});
+            post.Comments.Add(new Comment() { Author = author, Body = body, CommentDate = date });
             db.SaveChanges();
             return Content("comment created");
         }
