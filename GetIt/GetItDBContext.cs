@@ -18,4 +18,5 @@ public class GetItDBContext : DbContext
     }
 
     public System.Data.Entity.DbSet<GetIt.Models.Post> Posts { get; set; }
+    public System.Data.Entity.DbSet<GetIt.Models.Comment> Comments { get; set; }
 }

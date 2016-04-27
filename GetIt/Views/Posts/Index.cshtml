@@ -25,6 +25,7 @@
         <div class="col-md-8">
             @Html.ActionLink($"{item.Title}", $"Details/{item.Id}")
             <p>submitted @Html.DisplayFor(modelItem => item.PostDate), by @Html.DisplayFor(modelItem => item.Author)</p>
+            @Html.ActionLink($"{item.Comments.Count} comments", $"Details/{item.Id}")
         </div>
     </div>
 }

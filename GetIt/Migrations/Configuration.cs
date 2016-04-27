@@ -44,6 +44,20 @@ namespace GetIt.Migrations
                     .Build();
                 context.Posts.AddRange(posts);
             }
+
+            if (!context.Comments.Any())
+            {
+                var comments = Builder<Comment>.CreateListOfSize(50)
+                    .All()
+                    //.With(x=>x.Post.Id = Faker.NumberFaker.Number())
+                    .With(x => x.Author = Faker.NameFaker.FirstName())
+                    .With(x => x.Body = Faker.TextFaker.Sentences(4))
+                    .With(x => x.CommentDate = Faker.DateTimeFaker.DateTime())
+                    .With(x => x.Upvote = Faker.NumberFaker.Number(100))
+                    .With(x => x.Downvote = Faker.NumberFaker.Number(20))
+                    .Build();
+                context.Comments.AddRange(comments);
+            }
         }
     }
 }
